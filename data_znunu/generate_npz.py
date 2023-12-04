@@ -1,5 +1,5 @@
 from coffea.nanoevents import NanoEventsFactory
-from coffea.nanoevents.schemas import NanoAODSchema,BaseSchema
+from coffea.nanoevents.schemas import PFNanoAODSchema,BaseSchema
 import numpy as np
 import os
 from optparse import OptionParser
@@ -98,7 +98,7 @@ if __name__ == '__main__':
             if currentfile<options.startfile:
                 currentfile+=1
                 continue
-            events = NanoEventsFactory.from_root(ifile, schemaclass=NanoAODSchema).events()
+            events = NanoEventsFactory.from_root(ifile, schemaclass= PFNanoAODSchema).events()
             nevents_total = len(events)
             print(ifile, ' Number of events:', nevents_total)
             
