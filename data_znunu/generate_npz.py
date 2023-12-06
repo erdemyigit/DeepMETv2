@@ -43,11 +43,10 @@ def future_savez(i, tot):
                       events.PFCands.dz[i],
                       events.PFCands.pdgId[i],
                       events.PFCands.charge[i],
-                      events.PFCands.fromPV[i],
                       events.PFCands.puppiWeight[i],
-                      events.PFCands.pvRef[i],
                       events.PFCands.pvAssocQuality[i]
         ])
+        #I removed events.PFCands.fromPV[i] and events.PFCands.pvRef[i] as they are not available in Run3 NanoAODs
         eventi = [particle_list,genmet_list]
         #toc=time.time()
         #print(toc-tic)
@@ -138,10 +137,10 @@ if __name__ == '__main__':
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.puppiWeight, nparticles_per_event,clip=True),-999)  ] ,
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.pdgId, nparticles_per_event,clip=True),-999)        ] ,
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.charge, nparticles_per_event,clip=True),-999)        ] ,
-                             [ ak.fill_none(ak.pad_none(events_slice.PFCands.fromPV, nparticles_per_event,clip=True),-999)        ] ,
-                             [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvRef, nparticles_per_event,clip=True),-999)         ] ,
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvAssocQuality, nparticles_per_event,clip=True),-999)] ,
                 ])
+
+                #I removed [ ak.fill_none(ak.pad_none(events_slice.PFCands.fromPV, nparticles_per_event,clip=True),-999)        ] and [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvRef, nparticles_per_event,clip=True),-999)         ] as they are not available in Run3 NanoAODs               
                 npz_file=os.environ['PWD']+'/raw/'+dataset+'_file'+str(currentfile)+'_slice_'+str(i)+'_nevent_'+str(len(events_slice))
                 np.savez(npz_file,x=particle_list,y=met_list) 
                 toc=time.time()
