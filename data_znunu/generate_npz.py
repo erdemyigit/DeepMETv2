@@ -115,17 +115,17 @@ if __name__ == '__main__':
                 print("max NPF in this range: ", nparticles_per_event)
                 tic=time.time()
                 met_list = np.column_stack([
-                        events_slice.GenMET.pt * np.cos(events_slice.GenMET.phi),
-                        events_slice.GenMET.pt * np.sin(events_slice.GenMET.phi),
-                        events_slice.MET.pt * np.cos(events_slice.MET.phi),
-                        events_slice.MET.pt * np.sin(events_slice.MET.phi),
-                        events_slice.PuppiMET.pt * np.cos(events_slice.PuppiMET.phi),
-                        events_slice.PuppiMET.pt * np.sin(events_slice.PuppiMET.phi),
-                        events_slice.DeepMETResponseTune.pt * np.cos(events_slice.DeepMETResponseTune.phi),
-                        events_slice.DeepMETResponseTune.pt * np.sin(events_slice.DeepMETResponseTune.phi),
-                        events_slice.DeepMETResolutionTune.pt * np.cos(events_slice.DeepMETResolutionTune.phi),
-                        events_slice.DeepMETResolutionTune.pt * np.sin(events_slice.DeepMETResolutionTune.phi),
-                        events_slice.LHE.HT
+                        ak.to_numpy(events_slice.GenMET.pt * np.cos(events_slice.GenMET.phi)),
+                        ak.to_numpy(events_slice.GenMET.pt * np.sin(events_slice.GenMET.phi)),
+                        ak.to_numpy(events_slice.MET.pt * np.cos(events_slice.MET.phi)),
+                        ak.to_numpy(events_slice.MET.pt * np.sin(events_slice.MET.phi)),
+                        ak.to_numpy(events_slice.PuppiMET.pt * np.cos(events_slice.PuppiMET.phi)),
+                        ak.to_numpy(events_slice.PuppiMET.pt * np.sin(events_slice.PuppiMET.phi)),
+                        ak.to_numpy(events_slice.DeepMETResponseTune.pt * np.cos(events_slice.DeepMETResponseTune.phi)),
+                        ak.to_numpy(events_slice.DeepMETResponseTune.pt * np.sin(events_slice.DeepMETResponseTune.phi)),
+                        ak.to_numpy(events_slice.DeepMETResolutionTune.pt * np.cos(events_slice.DeepMETResolutionTune.phi)),
+                        ak.to_numpy(events_slice.DeepMETResolutionTune.pt * np.sin(events_slice.DeepMETResolutionTune.phi)),
+                        ak.to_numpy(events_slice.LHE.HT)
                 ])
                 particle_list = ak.concatenate([
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.pt, nparticles_per_event,clip=True),-999)           ] ,
@@ -137,7 +137,7 @@ if __name__ == '__main__':
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.puppiWeight, nparticles_per_event,clip=True),-999)  ] ,
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.pdgId, nparticles_per_event,clip=True),-999)        ] ,
                              [ ak.fill_none(ak.pad_none(events_slice.PFCands.charge, nparticles_per_event,clip=True),-999)        ] ,
-                             [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvAssocQuality, nparticles_per_event,clip=True),-999)] ,
+                             [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvAssocQuality, nparticles_per_event,clip=True),-999)]
                 ])
 
                 #I removed [ ak.fill_none(ak.pad_none(events_slice.PFCands.fromPV, nparticles_per_event,clip=True),-999)        ] and [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvRef, nparticles_per_event,clip=True),-999)         ] as they are not available in Run3 NanoAODs               
