@@ -140,8 +140,27 @@ if __name__ == '__main__':
                 ])
 
                 #I removed [ ak.fill_none(ak.pad_none(events_slice.PFCands.fromPV, nparticles_per_event,clip=True),-999)        ] and [ ak.fill_none(ak.pad_none(events_slice.PFCands.pvRef, nparticles_per_event,clip=True),-999)         ] as they are not available in Run3 NanoAODs               
+                
+                # Determine the maximum length of nested arrays in 'particle_list'                                                                                                                                                                                            
+                # max_length = max(len(x) for x in ak.flatten(particle_list, axis=1))                                                                                                                                                                                          
+
+                # Pad each nested array in 'particle_list' to the maximum length and fill missing values                                                                                                                                                                      
+                # padded_particle_list = ak.fill_none(ak.pad_none(particle_list, max_length, clip=True), -999)                                                                                                                                                                 
+
+                # Convert the padded awkward array to a NumPy array                                                                                                                                                                                                           
+
+                met_list_np = ak.to_numpy(met_list)
+                particle_list_np = ak.to_numpy(particle_list)
                 npz_file=os.environ['PWD']+'/raw/'+dataset+'_file'+str(currentfile)+'_slice_'+str(i)+'_nevent_'+str(len(events_slice))
-                np.savez(npz_file,x=particle_list,y=met_list) 
+                
+                #Print the shapes of particle_list and met_list                                                                                                                                                                                                               
+                print('particle_list type:', type(particle_list), 'shape:', np.shape(particle_list))
+                print('met_list type:', type(met_list), 'shape:', np.shape(met_list))
+                print('---')
+                print('particle list (np) type:', type(particle_list_np), 'shape:', np.shape(particle_list_np))
+                print('met list (np) type:', type(met_list_np), 'shape:', np.shape(met_list_np))
+                
+                np.savez(npz_file,x=particle_list_np,y=met_list_np)
                 toc=time.time()
                 print('time:',toc-tic)
             currentfile+=1
